@@ -15,7 +15,7 @@ class Delete extends ControllerAdmin
         if ($user) {
             $user->delete();
             $message = 'Пользователь успешно удален';
-            http_response_code(400);
+            http_response_code(200);
         } else {
             $message = 'Ошибка. Пользователь не найден';
             http_response_code(404);

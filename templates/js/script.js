@@ -188,4 +188,9 @@ $(document).ready(function(){
 
         return newLi;
     };
+
+    $('.overlay').on('click', function(){
+        $('.modal__edit').hide();
+        $('.overlay').hide();
+    });
 });
