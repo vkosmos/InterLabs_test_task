@@ -32,7 +32,6 @@ $(document).ready(function(){
 
     $('.users-edit__button').on('click', function(ev){
         let selId = $(this).attr('data-id');
-        $('.users-edit__item[name=name]').val($('.users-list__item[data-id=' + selId + '] .users-list__text--name').html());
         $.ajax({
             url: '/adminsection/edit',
             type: 'POST',
@@ -56,6 +55,8 @@ $(document).ready(function(){
                 }
             },
             error: function(er){
+                $('.users-list__error').html(er.responseJSON.message).fadeIn();
+                setTimeout(function(){$('.users-list__error').fadeOut();}, 5000);
                 console.log(er);
             }
         });
