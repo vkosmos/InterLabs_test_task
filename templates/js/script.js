@@ -138,7 +138,7 @@ $(document).ready(function(){
         ev.preventDefault();
     });
 
-    function createUserLi(id, name, email, address){
+    function createUserLi(id, name, email, address) {
         let newLi = $('<li>', {
             class: 'users-list__item draggable',
             attr: {
@@ -203,5 +203,4 @@ $(document).ready(function(){
     });
 
     new DragndropHandler({drag: 'draggable', drop: 'droppable'});
-
 });
