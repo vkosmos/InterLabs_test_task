@@ -1,0 +1,164 @@
+.users-list {
+    list-style-type: none;
+    margin-bottom: 15px;
+    padding: 0;
+}
+
+.users-list__item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 3px;
+    border-left: 1px solid #f00;
+    border-top: 1px solid #f00;
+    border-right: 1px solid #f00;
+}
+
+.users-list__wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.users-list__item:last-child {
+    border-bottom: 1px solid #f00;
+}
+
+.users-list__text {
+    margin: 3px;
+    width: 30%;
+}
+
+.users-list__checkbox {
+    margin-right: 10px;
+}
+
+.users-list__links {
+    margin: 3px;
+}
+
+.users-list__links a {
+    margin-right: 10px;
+}
+
+.users-list__delete {
+    float: right;
+}
+
+
+.users-add {
+    display: none;
+    position: relative;
+    width: 280px;
+    text-align: center;
+    border: 1px solid red;
+    padding-bottom: 15px;
+    margin-bottom: 30px;
+}
+
+.users__hide {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 30px;
+    height: 30px;
+    color: #fff;
+    background-color: #444;
+    cursor: pointer;
+}
+.users__hide::before,
+.users__hide::after {
+    content: '';
+    position: absolute;
+    top: 14px;
+    left: 2px;
+    display: block;
+    width: 25px;
+    height: 3px;
+    background-color: #fff;
+}
+.users__hide::before {
+    transform: rotate(45deg);
+}
+.users__hide::after {
+    transform: rotate(-45deg);
+}
+
+.button {
+    display: inline-block;
+    padding: 5px 15px;
+    background-color: #444;
+    color: #fff;
+    border: 0;
+    cursor: pointer;
+}
+
+.button:hover,
+.users-add__hide:hover {
+    background-color: red;
+}
+
+.login-form {
+    /*display: inline-block;*/
+    padding: 10px;
+    border: 1px solid red;
+    max-width: 320px;
+
+}
+
+.login-form__input {
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.login-form__button {
+    width: 100%;
+}
+
+.modal__edit {
+    display: none;
+    position: fixed;
+    left: calc(50% - 200px);
+    top: calc(50% - 130px);
+    width: 400px;
+    height: 260px;
+    background-color: #fff;
+    z-index: 10;
+}
+
+.overlay {
+    display: none;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5);
+}
+
+.users-edit {
+    padding: 20px;
+}
+
+.users-edit__item {
+    width: 100%;
+}
+
+.users-edit__button {
+    margin-top: 10px;
+    width: 100%;
+}
+
+.users-list__error {
+    color: red;
+}
+
+/*
+    DRAG'N'DROP
+ */
+
+.moving {
+    position: absolute;
+    z-index: 9999;
+}
