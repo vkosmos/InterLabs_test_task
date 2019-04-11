@@ -10,10 +10,19 @@ class Delete extends ControllerAdmin
 
     protected function handle()
     {
-        $id = (int)trim($_GET['id']);
-        $user = User::findById($id);
-        if ($user) {
-            $user->delete();
+        $ids = $_POST['ids'];
+        $flagError = false;
+
+        foreach ($ids as $id) {
+            $user = User::findById($id);
+            if ($user) {
+                $user->delete();
+            } else {
+                $flagError = true;
+            }
+        }
+
+        if (!$flagError) {
             $message = 'Пользователь успешно удален';
             http_response_code(200);
         } else {

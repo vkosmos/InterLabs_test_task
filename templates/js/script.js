@@ -68,27 +68,34 @@ $(document).ready(function(){
     $('.users-list__delete').on('click', function(ev){
         let deleting = $('.users-list__checkbox:checked');
         if (deleting) {
+            let selIds = [];
             deleting.each(function(){
+                selIds.push($(this).attr('data-id'));
+            });
+            console.log(selIds);
 
-                let selId = $(this).attr('data-id');
-                $.ajax({
-                    url: '/adminsection/delete',
-                    type: 'GET',
-                    data: {id: selId},
-                    dataType: 'json',
-                    success: function(result) {
-                        if (result) {
+            $.ajax({
+                url: '/adminsection/delete',
+                type: 'POST',
+                data: {ids: selIds},
+                dataType: 'json',
+                success: function(result) {
+                    if (result) {
+                        for (let selId of selIds) {
+                            console.log(selId);
                             let deleted = $('.users-list__item[data-id=' + selId + ']');
+                            console.log(deleted);
                             deleted.remove();
                         }
-                    },
-                    error: function(er){
-                        $('.users-list__error').html(er.responseJSON.message).fadeIn();
-                        setTimeout(function(){$('.users-list__error').fadeOut();}, 5000);
-                        console.log(er);
                     }
-                });
+                },
+                error: function(er){
+                    $('.users-list__error').html(er.responseJSON.message).fadeIn();
+                    setTimeout(function(){$('.users-list__error').fadeOut();}, 5000);
+                    console.log(er);
+                }
             });
+
         };
 
         ev.preventDefault();
@@ -195,167 +202,6 @@ $(document).ready(function(){
         $('.overlay').hide();
     });
 
-
-    /*
-            DRAG'N'DROP
-     */
-
-    let dragObject = {};
-
-    document.onmousedown = function(ev) {
-        if (ev.which != 1) {
-            return;
-        }
-        let elem = ev.target.closest('.draggable');
-        if (!elem) {
-            return;
-        }
-        dragObject.elem = elem;
-        dragObject.downX = ev.pageX;
-        dragObject.downY = ev.pageY;
-    };
-
-    document.onmousemove = function(ev) {
-
-        if (!dragObject.elem) {
-            return;
-        }
-
-        if (!dragObject.avatar) {
-            clearSelection();
-
-            let moveX = ev.pageX - dragObject.downX;
-            let moveY = ev.pageY - dragObject.downY;
-            if (Math.abs(moveX) < 3 && Math.abs(moveY) < 3) {
-                return;
-            }
-
-            dragObject.avatar = createAvatar(ev); // захватить элемент
-            if (!dragObject.avatar) {
-                dragObject = {};
-            }
-
-            let coords = getCoords(dragObject.avatar);
-            dragObject.shiftX = dragObject.downX - coords.left;
-            dragObject.shiftY = dragObject.downY - coords.top;
-            startDrag(ev); // отобразить начало переноса
-        }
-
-        dragObject.avatar.style.left = ev.pageX - dragObject.shiftX + 'px';
-        dragObject.avatar.style.top = ev.pageY - dragObject.shiftY + 'px';
-        return false;
-    };
-
-    document.onmouseup = function(ev) {
-        if (dragObject.avatar) {
-            finishDrag(ev);
-        }
-        dragObject = {};
-    };
-
-
-    function createAvatar(ev) {
-        let avatar = dragObject.elem;
-        let temp = dragObject.elem.getBoundingClientRect();
-        temp = (temp.right - temp.left - 8);
-        avatar.setAttribute("style","width:"+temp+"px");
-
-        let old = {
-            parent: avatar.parentNode,
-            nextSibling: avatar.nextSibling,
-        };
-
-        // функция для отмены переноса
-        avatar.rollback = function() {
-            old.parent.insertBefore(avatar, old.nextSibling);
-            avatar.classList.remove('moving');
-            avatar.removeAttribute('style');
-        };
-
-        // Вставка на новое место
-        avatar.insertIntoNewPlace = function(container, target, direction) {
-            if ('prev' == direction) {
-                container.insertBefore(avatar, target);
-            } else if ('next' == direction) {
-                container.insertBefore(avatar, target.nextSibling);
-            }
-            avatar.classList.remove('moving');
-            avatar.removeAttribute('style');
-        };
-
-        return avatar;
-    }
-
-    function startDrag(ev) {
-        let avatar = dragObject.avatar;
-
-        //Вырезаем переносимый элемент
-        document.body.appendChild(avatar);
-        avatar.classList.add('moving');
-    }
-
-    function getCoords(elem) {
-        let box = elem.getBoundingClientRect();
-        return {
-            top: box.top + pageYOffset,
-            left: box.left + pageXOffset
-        };
-    }
-
-    function finishDrag(ev) {
-        let dropElem = findDroppable(ev);
-        if (dropElem) {
-
-            let xx = ev.pageX;
-            let yy = ev.pageY;
-
-            let lis = dropElem.querySelectorAll('.draggable');
-            let targetItem;
-            let direction;
-
-            for (let i = 0; i < lis.length; i++) {
-                let coords = lis[i].getBoundingClientRect();
-                if (yy > coords.top && yy <= coords.bottom) {
-                    targetItem = lis[i];
-                    //Опеределяем, в нижнюю или верхнюю часть элемента попали
-                    let center = coords.top + ( coords.bottom - coords.top ) / 2;
-                    if (yy < center) {
-                        direction = 'prev';
-                    } else {
-                        direction = 'next';
-                    }
-                }
-            }
-            dragObject.avatar.insertIntoNewPlace(dropElem, targetItem, direction);
-        }
-        else {
-            dragObject.avatar.rollback();
-        }
-    }
-
-    function findDroppable(event) {
-
-        // спрячем переносимый элемент
-        dragObject.avatar.style.display = 'none';
-
-        // получить самый вложенный элемент под курсором мыши
-        let elem = document.elementFromPoint(event.clientX, event.clientY);
-
-        // показать переносимый элемент обратно
-        dragObject.avatar.style.display = 'flex';
-        if (elem == null) {
-            return null;
-        }
-
-        return elem.closest('.droppable');
-    }
-
-    function clearSelection() {
-        if (window.getSelection) {
-            window.getSelection().removeAllRanges();
-        } else { // старый IE
-            document.selection.empty();
-        }
-    }
+    new DragndropHandler({drag: 'draggable', drop: 'droppable'});
 
 });
