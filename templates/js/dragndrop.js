@@ -6,7 +6,7 @@ let DragndropHandler = function(initParams){
     let droppableClass = initParams.drop;
 
     document.addEventListener('mousedown', onMouseDown);
-    document.addEventListener('mousemove', on MouseMove);
+    document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
 
     function onMouseDown (ev) {
