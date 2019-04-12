@@ -6,6 +6,11 @@
 ---
     interlabs.sql
 ---
+Вход в административный раздел
+---
+    логин: admin
+    пароль: 123456
+---
 Javascript файлы
 ---
     templates/js/
