@@ -1,16 +1,16 @@
-h2 Настройки подключения к БД:
+Настройки подключения к БД:
 ---
     config/config_data.php
 ---
-h2 Дамп базы данных
+Дамп базы данных
 ---
     interlabs.sql
 ---
-h2 Javascript файлы
+Javascript файлы
 ---
     templates/js/
 ---
-h2 Контроллеры
+Контроллеры
 ---
     App/Controllers
     
