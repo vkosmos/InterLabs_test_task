@@ -239,6 +239,7 @@ let DragndropHandler = function(initParams){
 
     function saveSorts(data)
     {
+
         $.ajax({
             url: '/adminsection/savesort',
             type: 'POST',
@@ -247,7 +248,7 @@ let DragndropHandler = function(initParams){
             },
             dataType: 'json',
             success: function(result) {
-
+                // console.log(result);
             },
             error: function(er){
                 $('.users-list__error').html(er.responseJSON.message);
@@ -258,4 +259,15 @@ let DragndropHandler = function(initParams){
 
     }
 
+    function status(response) {
+        if (response.status >= 200 && response.status < 300) {
+            return Promise.resolve(response)
+        } else {
+            return Promise.reject(new Error(response.statusText))
+        }
+    }
+
+    function json(response) {
+        return response.json();
+    }
 };

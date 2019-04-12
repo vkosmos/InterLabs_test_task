@@ -11,7 +11,6 @@ class Savesort extends ControllerAdmin
     protected function handle()
     {
         $accordance = $_POST['data'];
-//        $accordance = [[1, 10], [3, 15], [50, 20]];
         User::saveSort($accordance);
 
         http_response_code(200);
