@@ -1,27 +1,33 @@
 $(document).ready(function(){
 
-    $('.users-add__show').on('click', function(ev){
+    $('.users-add__show').on('click', function(ev)
+    {
         $('.users-add').slideDown();
         ev.preventDefault();
     });
 
-    $('.users__hide--add').on('click', function(ev){
+    $('.users__hide--add').on('click', function(ev)
+    {
         $('.users-add').slideUp();
         ev.preventDefault();
     });
 
-    $('.users__hide--edit').on('click', function(ev){
+    $('.users__hide--edit').on('click', function(ev)
+    {
         $('.modal__edit').hide();
         $('.overlay').hide();
         ev.preventDefault();
     });
 
-    $('.users-list__edit').on('click', function(ev){
+    $('.users-list__edit').on('click', function(ev)
+    {
         //Открываем форму
         let selId = $(this).attr('data-id');
+        let selSort = $(this).attr('data-sort');
         $('.users-edit__item[name=name]').val($('.users-list__item[data-id=' + selId + '] .users-list__text--name').html());
         $('.users-edit__item[name=email]').val($('.users-list__item[data-id=' + selId + '] .users-list__text--email').html());
         $('.users-edit__item[name=address]').val($('.users-list__item[data-id=' + selId + '] .users-list__text--address').html());
+        $('.users-edit__item[name=sort]').val(selSort);
         $('.users-edit__button').attr('data-id', selId);
 
         $('.modal__edit').show();
@@ -30,7 +36,8 @@ $(document).ready(function(){
         ev.preventDefault();
     });
 
-    $('.users-edit__button').on('click', function(ev){
+    $('.users-edit__button').on('click', function(ev)
+    {
         let selId = $(this).attr('data-id');
         $.ajax({
             url: '/adminsection/edit',
@@ -65,7 +72,8 @@ $(document).ready(function(){
     });
 
 
-    $('.users-list__delete').on('click', function(ev){
+    $('.users-list__delete').on('click', function(ev)
+    {
         let deleting = $('.users-list__checkbox:checked');
         if (deleting) {
             let selIds = [];
@@ -101,7 +109,8 @@ $(document).ready(function(){
         ev.preventDefault();
     });
 
-    $('.users-add__button').on('click', function(ev){
+    $('.users-add__button').on('click', function(ev)
+    {
         let userName = $('.users-add__item[name=name]').val();
         let userEmail = $('.users-add__item[name=email]').val();
         let userAddress = $('.users-add__item[name=address]').val();
@@ -138,7 +147,8 @@ $(document).ready(function(){
         ev.preventDefault();
     });
 
-    function createUserLi(id, name, email, address) {
+    function createUserLi(id, name, email, address)
+    {
         let newLi = $('<li>', {
             class: 'users-list__item draggable',
             attr: {
@@ -197,7 +207,8 @@ $(document).ready(function(){
         return newLi;
     };
 
-    $('.overlay').on('click', function(){
+    $('.overlay').on('click', function()
+    {
         $('.modal__edit').hide();
         $('.overlay').hide();
     });

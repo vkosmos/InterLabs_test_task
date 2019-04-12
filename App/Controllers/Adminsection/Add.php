@@ -19,6 +19,7 @@ class Add extends ControllerAdmin
             $user->name = $name;
             $user->email = $email;
             $user->address = $address;
+            $user->sort = User::getMaxSort() + 1;
             $user->save();
             http_response_code(200);
             $message = 'Пользователь добавлен';

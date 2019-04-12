@@ -14,13 +14,15 @@ class Edit extends ControllerAdmin
         $name = trim($_POST['name']);
         $email = trim($_POST['email']);
         $address = trim($_POST['address']);
+        $sort = trim($_POST['sort']);
 
-        if (!empty($id) &&!empty($name) && !empty($email) && !empty($address)) {
+        if (!empty($id) &&!empty($name) && !empty($email) && !empty($address) && !empty($sort)) {
             $user = new User();
             $user->id = $id;
             $user->name = $name;
             $user->email = $email;
             $user->address = $address;
+            $user->sort = $sort;
             $user->save();
             http_response_code(200);
             $message = 'Пользователь изменен';

@@ -61,7 +61,7 @@
                 </p>
             </div>
             <p class="users-list__links">
-                <a class="button users-list__edit" data-id="<?=$item->id;?>" href="/adminsection/edit/?id=<?=$item->id?>">Редактировать</a>
+                <a class="button users-list__edit" data-id="<?=$item->id;?>" data-sort="<?=$item->sort;?>" href="/adminsection/edit/?id=<?=$item->id?>">Редактировать</a>
             </p>
         </li>
     <?php endforeach; ?>
@@ -70,6 +70,7 @@
 
 <div class="modal__edit">
     <form class="users-edit" method="POST">
+        <input class="users-edit__item" name="sort" type="hidden" value="">
         <p>
             <label for="user-name--edit">Имя:<br>
                 <input id="user-name--edit" type="text" class="users-edit__item" name="name" placeholder="Имя">
